@@ -1,0 +1,133 @@
+ROAMORA SINGAPORE — DATASET GUIDE
+==================================
+
+1. PURPOSE
+----------
+roamora_singapore_dataset.json is a populated, Singapore-focused demonstration dataset for Roamora, a fictional travel discovery and journey-planning website. It includes destinations, travel styles, packages, activities, itineraries, accommodation concepts, sample availability, facilities, visa-preparation guidance, local recommendations, booking-policy templates and FAQs.
+
+2. IMPORTANT DATA STATUS
+------------------------
+This is MOCK / DEMONSTRATION DATA, not live travel inventory.
+- Roamora is a fictional brand concept.
+- Accommodation concepts and package offers are fictional.
+- Prices are illustrative values in Singapore dollars (SGD).
+- Availability is seeded sample data and is NOT connected to suppliers.
+- Booking and cancellation policies are templates only, not approved commercial terms.
+- Visa content is a checklist, not immigration or legal advice.
+Never present demo prices or availability as real, guaranteed, or currently bookable. Replace demo values with verified supplier data, obtain legal review, and add supplier integrations before launch.
+
+3. DATA STRUCTURE
+-----------------
+metadata: brand, market, currency, version, counts and integrity notes.
+destinations[]: Singapore locations with IDs, region, type, highlights, transit and access notes.
+travel_styles[]: editorial discovery filters such as food, culture, nature and photography.
+accommodation_options[]: fictional stay concepts, not real hotel listings.
+activities[]: experiences linked to destination_id; includes duration, demo price, inclusions, exclusions and practical notes.
+packages[]: package catalogue with destination_ids, activity_ids, optional hotel_id, sample availability reference, price, inclusions/exclusions and cancellation-policy reference.
+itineraries[]: suggested day plans with ordered stops, pace, transit, meal and rain guidance.
+local_recommendations[]: editorial tips linked to destinations.
+facilities[]: website/service feature descriptions; not guarantees that a supplier will fulfil a request.
+availability_calendar_demo[]: example dates, statuses and prices. is_live is false for every record.
+visa_guides[]: entry-preparation checklists and official-source links.
+booking_policies: booking, cancellation, changes, privacy and travel-document templates.
+faqs[]: common prototype questions and honest demo disclosures.
+website_content: homepage copy, brand voice and design tokens.
+
+4. ID RELATIONSHIPS
+-------------------
+- packages.destination_ids[] -> destinations[].id
+- packages.activity_ids[] -> activities[].id
+- packages.hotel_id -> accommodation_options[].id (may be null)
+- packages.cancellation_policy_id -> booking_policies.cancellation.id
+- activities.destination_id -> destinations[].id
+- itineraries.destination_ids[] -> destinations[].id
+- local_recommendations.destination_id -> destinations[].id
+- availability_calendar_demo.package_id -> packages[].id
+
+Create lookup maps by ID in the app and validate references during development. Do not duplicate dataset values in hard-coded UI strings.
+
+5. SUGGESTED ROAMORA EXPERIENCE
+-------------------------------
+Roamora should feel like an immersive editorial travel publication with practical planning tools, not a generic marketplace.
+
+Navigation:
+- Desktop: slim vertical “Expedition Index” rail with section markers, scroll progress, menu trigger and planner shortcut.
+- Menu: full-screen editorial menu with clear keyboard and mobile support.
+- Mobile: compact dock or accessible menu; no hover-only actions.
+- Do not use a conventional horizontal navbar, a floating pill navbar, or another project's signature navigation motif.
+
+Suggested homepage composition:
+1. Cinematic opening with oversized editorial typography.
+2. Asymmetric destination discovery.
+3. Interactive travel-style selectors.
+4. Horizontal storytelling for a limited set of featured journeys.
+5. Searchable package list with duration, budget, pace and destination filters.
+6. Vertical itinerary timeline.
+7. Budget overview that separates package price from optional estimated extras.
+8. Visa-preparation checklist with official-source disclaimer.
+9. Editorial local recommendations.
+10. Facilities/inclusions comparison matrix.
+11. Sample availability calendar clearly labelled DEMO.
+12. Booking, cancellation and change-policy sections.
+13. FAQ and contact/enquiry flow.
+
+Avoid making every section a grid of identical cards. Vary layout, whitespace, image crops, typography and interaction. Use unique, licensed images and meaningful alt text.
+
+Design tokens:
+- Background: #F7F3EB
+- Text: #242722
+- Deep accent: #34483C
+- Warm accent: #D76A45
+- Highlight: #E7B86A
+- Card: #FFFEFA
+- Border: #DCD9D0
+- Heading font: DM Serif Display
+- Label font: Space Mono
+- Body font: DM Sans
+
+Motion:
+Use restrained image reveals, editorial transitions, route-line drawing, timeline progress and focus/hover states. Framer Motion and optionally GSAP/ScrollTrigger are suitable. Respect prefers-reduced-motion, avoid scroll hijacking, and ensure core content works without animation.
+
+6. IMPLEMENTATION
+-----------------
+- Suggested stack: Next.js App Router, TypeScript, Tailwind CSS, Framer Motion and optionally GSAP/ScrollTrigger.
+- Store the JSON in a data/ directory and import it into a typed data module.
+- Add TypeScript types for Destination, Package, Activity, Itinerary, Recommendation, DemoAvailability and Policy.
+- Use image_key as a semantic asset key, not a direct image URL.
+- Use next/image or a carefully configured image strategy. Maintain a unique asset manifest with properly licensed photos.
+- Build loading, empty, error, responsive and reduced-motion states.
+- Make every button functional: search, filters, itinerary builder, detail views, sample-date selection and enquiry flow.
+- Without a booking backend, use “Request an itinerary” or “Enquire”; never pretend a reservation is confirmed.
+- Keep secrets and API keys in environment variables, never in the dataset.
+- Make demo price and demo availability disclosures visible beside the relevant UI.
+
+7. VISA AND ENTRY REQUIREMENTS
+------------------------------
+The dataset only provides general planning reminders. Requirements depend on passport, nationality, purpose and circumstances and may change. Use Singapore's Immigration & Checkpoints Authority (ICA) for official information:
+https://www.ica.gov.sg/
+
+Do not infer eligibility from this file. Do not promise visa approval or entry. Travellers should check official information shortly before departure.
+
+8. PRODUCTION READINESS CHECKLIST
+---------------------------------
+[ ] Replace fictional packages and accommodation concepts with verified supplier records.
+[ ] Verify every price, tax, inclusion, exclusion and extra fee.
+[ ] Connect availability to real supplier inventory or clearly label the experience request-only.
+[ ] Implement secure checkout, payment handling and supplier confirmation.
+[ ] Have booking, cancellation, refund and privacy terms reviewed by qualified counsel.
+[ ] Verify entry guidance against official sources before displaying it as current.
+[ ] Confirm accessibility and dietary arrangements directly with operators.
+[ ] Add customer-support and emergency processes.
+[ ] Test mobile, keyboard navigation, contrast, reduced motion and screen-reader support.
+[ ] Confirm image licences and alt text.
+[ ] Validate JSON syntax and all ID references in automated checks.
+
+9. QUICK START
+--------------
+1. Place roamora_singapore_dataset.json in your project's data/ directory.
+2. Import it into a typed data module or load it through a server-side data layer.
+3. Build destination, activity, itinerary and package views using stable IDs.
+4. Clearly mark all seeded availability and prices as demo-only.
+5. Replace mock content and policies before taking real bookings or payments.
+
+END OF GUIDE
